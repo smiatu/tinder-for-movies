@@ -1,35 +1,51 @@
 import CardFooter from "../CardFooter/CardFooter";
 import TinderCard from "react-tinder-card";
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
+import axios from 'axios';
 
 const CardSection = () => {
-    const [cards, setCards] = useState([
-        {
-            name: 'card1',
-        },
-        {
-            name: 'card2',
-        },
-        {
-            name: 'card3',
-        }
-    ]);
+    const [cards, setCards] = useState({
+        isLoading: true,
+        movies: [],
+        error: null
+    });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios(
+                "http://localhost:3000/movies",
+            );
+
+            setCards({
+                isLoading: false,
+                movies: result.data,
+                error: null
+            });
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div>
             {
-                cards.map(card => (
-                    <div style={{position: "absolute", height: "80vh", width: "100vw"}}>
-                        <TinderCard
-                            key={card.name}
-                            preventSwipe={['up', 'down']}
+                cards.movies && cards.movies.map(movie => (
+                    <TinderCard
+                        key={movie.id}
+                        preventSwipe={['up', 'down']}
+                    >
+                        <div
+                            style={{
+                                position: "absolute",
+                                height: "80vh",
+                                width: "100vw"
+                            }}
                         >
-                            <div>
-                                <h2>{card.name}</h2>
-                            </div>
-                        </TinderCard>
-                        <CardFooter />
-                    </div>
+                            <h2>{movie.title}</h2>
+                            <CardFooter />
+                        </div>
+
+                    </TinderCard>
                     )
                 )
             }

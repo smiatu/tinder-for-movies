@@ -1,13 +1,19 @@
 import axios from "axios";
 
-export const swipeHandler = async (direction, id) => {
+export type Props = {
+    direction: string,
+    id: string
+}
+
+export const swipeHandler = async ({ direction, id }: Props) => {
     if(direction === 'right'){
         await acceptMovie(id);
         return;
     }
     await rejectMovie(id);
 };
-export const acceptMovie = async (id) => {
+
+export const acceptMovie = async (id: string) => {
     const result = await axios(
         `http://localhost:3000/recommendations/${id}`,
     );
@@ -22,7 +28,8 @@ export const acceptMovie = async (id) => {
         console.log(error);
     });
 };
-export const rejectMovie = async (id) => {
+
+export const rejectMovie = async (id: string) => {
     const result = await axios(
         `http://localhost:3000/recommendations/${id}`,
     );

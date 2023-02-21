@@ -3,6 +3,7 @@ import TinderCard from 'react-tinder-card'
 import React, { useEffect, useState } from 'react'
 import { swipeHandler } from '../../actions/actions'
 import axios from 'axios'
+import './CardSection.css'
 
 interface useStateTypes {
   isLoading: boolean
@@ -51,6 +52,7 @@ const CardSection: () => JSX.Element = () => {
         cards.movies.map(
           movie => (movie.reject === undefined && movie.accept === undefined) && (
             <TinderCard
+              className={'card__container'}
               key={movie.id}
               preventSwipe={['up', 'down']}
               onSwipe={(dir) => {
@@ -67,13 +69,7 @@ const CardSection: () => JSX.Element = () => {
                 )
               }}
             >
-              <div
-                style={{
-                  position: 'absolute',
-                  height: '80vh',
-                  width: '100vw'
-                }}
-              >
+              <div>
                 <h2>{movie.title}</h2>
                 <CardFooter
                   id={movie.id}

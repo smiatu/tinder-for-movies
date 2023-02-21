@@ -52,7 +52,7 @@ const CardSection: () => JSX.Element = () => {
         cards.movies.map(
           movie => (movie.reject === undefined && movie.accept === undefined) && (
             <TinderCard
-              className={'card__container'}
+              className={'card__wrapper'}
               key={movie.id}
               preventSwipe={['up', 'down']}
               onSwipe={(dir) => {
@@ -69,8 +69,12 @@ const CardSection: () => JSX.Element = () => {
                 )
               }}
             >
-              <div>
-                <h2>{movie.title}</h2>
+              <div className={'card'}>
+                <h2>{movie.title} ({movie.rating})</h2>
+                <div className={'card__picture-wrapper'}>
+                  <img src={movie.imageURL} className={'card__picture'}/>
+                </div>
+                <p>{movie.summary}</p>
                 <CardFooter
                   id={movie.id}
                   onContentChange={fetchData}

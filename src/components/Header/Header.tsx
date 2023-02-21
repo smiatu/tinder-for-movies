@@ -1,8 +1,9 @@
 import React from 'react'
+import './Header.css'
 
 const Header: () => JSX.Element = () => {
   return (
-    <div>Tinder for movies</div>
+    <h3 className={'header'}>Tinder for movies</h3>
   )
 }
 

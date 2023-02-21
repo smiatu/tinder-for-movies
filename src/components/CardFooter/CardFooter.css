@@ -1,0 +1,6 @@
+.footer__container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 80%;
+    min-width: 240px;
+}

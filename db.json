@@ -33,10 +33,7 @@
       "imageURL": "https://images-na.ssl-images-amazon.com/images/M/MV5BOTAzODEzNDAzMl5BMl5BanBnXkFtZTgwMDU1MTgzNzE@._V1_SY1000_CR0,0,677,1000_AL_.jpg",
       "title": "mock data 1",
       "summary": "Lorem ipsum....",
-      "rating": 8.2,
-      "reject": {
-        "value": true
-      }
+      "rating": 8.2
     }
   ]
 }

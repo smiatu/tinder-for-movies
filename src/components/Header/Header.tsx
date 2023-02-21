@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-const Header = () => {
-    return (
-        <div>Tinder for movies</div>
-    )
-};
+const Header: () => JSX.Element = () => {
+  return (
+    <div>Tinder for movies</div>
+  )
+}
 
 export default Header

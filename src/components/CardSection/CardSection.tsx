@@ -1,76 +1,93 @@
-import CardFooter from "../CardFooter/CardFooter";
-import TinderCard from "react-tinder-card";
-import { useEffect, useState } from 'react';
-import { swipeHandler } from "../../actions/actions";
-import axios from 'axios';
-import React from "react";
+import CardFooter from '../CardFooter/CardFooter'
+import TinderCard from 'react-tinder-card'
+import React, { useEffect, useState } from 'react'
+import { swipeHandler } from '../../actions/actions'
+import axios from 'axios'
 
-type useStateTypes = {
-    isLoading: boolean,
-    movies: moviesTypes[]
+interface useStateTypes {
+  isLoading: boolean
+  movies: moviesTypes[]
 }
 
-type moviesTypes = {
-    id: string,
-    imageURL: string,
-    title: string,
-    summary: string,
-    rating: number,
-    reject?: object,
-    accept?: object,
+interface moviesTypes {
+  id: string
+  imageURL: string
+  title: string
+  summary: string
+  rating: number
+  reject?: object
+  accept?: object
 }
 
-const CardSection = () => {
-    const [cards, setCards] = useState<useStateTypes>({
-        isLoading: true,
-        movies: []
-    });
+const CardSection: () => JSX.Element = () => {
+  const [cards, setCards] = useState<useStateTypes>({
+    isLoading: true,
+    movies: []
+  })
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        const result = await axios(
-            "http://localhost:3000/recommendations",
-        );
-
-        setCards({
-            isLoading: false,
-            movies: result.data
-        });
-    };
-
-    return (
-        <div>
-            {
-                cards.movies && cards.movies.map(movie => (movie.reject === undefined && movie.accept === undefined) && (
-                    <TinderCard
-                        key={movie.id}
-                        preventSwipe={['up', 'down']}
-                        onSwipe={(dir) => {
-                            swipeHandler({direction: dir, id: movie.id});
-                            fetchData();
-                        }}
-                    >
-                        <div
-                            style={{
-                                position: "absolute",
-                                height: "80vh",
-                                width: "100vw"
-                            }}
-                        >
-                            <h2>{movie.title}</h2>
-                            <CardFooter id={movie.id} onContentChange={fetchData}/>
-                        </div>
-
-                    </TinderCard>
-                    )
-                )
-            }
-
-        </div>
+  useEffect(() => {
+    fetchData().catch(
+      (e) => {
+        console.log(e)
+      }
     )
-};
+  }, [])
 
-export default CardSection;
+  const fetchData: () => Promise<void> = async () => {
+    const result = await axios(
+      'http://localhost:3000/recommendations'
+    )
+
+    setCards({
+      isLoading: false,
+      movies: result.data
+    })
+  }
+
+  return (
+    <div>
+      {
+        cards.movies.length > 0 &&
+        cards.movies.map(
+          movie => (movie.reject === undefined && movie.accept === undefined) && (
+            <TinderCard
+              key={movie.id}
+              preventSwipe={['up', 'down']}
+              onSwipe={(dir) => {
+                swipeHandler({ direction: dir, id: movie.id }).then(
+                  () => {
+                    fetchData().catch(e => {
+                      console.log(e)
+                    })
+                  }
+                ).catch(
+                  (e) => {
+                    console.log(e)
+                  }
+                )
+              }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  height: '80vh',
+                  width: '100vw'
+                }}
+              >
+                <h2>{movie.title}</h2>
+                <CardFooter
+                  id={movie.id}
+                  onContentChange={fetchData}
+                />
+              </div>
+
+            </TinderCard>
+          )
+        )
+      }
+
+    </div>
+  )
+}
+
+export default CardSection

@@ -13,6 +13,8 @@ const CardFooter: ({ id, onContentChange }: Props) => JSX.Element = ({ id, onCon
   return (
     <div>
       <IconButton
+        className={'button--accept pressable'}
+        data-testid={'accept-button'}
         onClick={() => {
           acceptMovie(id).then(
             () => {
@@ -26,11 +28,11 @@ const CardFooter: ({ id, onContentChange }: Props) => JSX.Element = ({ id, onCon
             }
           )
         }}
-        className='pressable'
       >
         <CheckIcon/>
       </IconButton>
       <IconButton
+        className={'button--reject pressable'}
         onClick={() => {
           rejectMovie(id).then(
             () => {
@@ -44,7 +46,6 @@ const CardFooter: ({ id, onContentChange }: Props) => JSX.Element = ({ id, onCon
             }
           )
         }}
-        className='pressable'
       >
         <CloseIcon/>
       </IconButton>

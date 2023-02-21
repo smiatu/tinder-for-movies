@@ -1,16 +1,16 @@
-import Header from "./components/Header/Header";
-import CardSection from "./components/CardSection/CardSection";
+import React from 'react'
+import Header from './components/Header/Header'
+import CardSection from './components/CardSection/CardSection'
 
-import './App.css';
-import React from "react";
+import './App.css'
 
-function App() {
-    return (
-        <div className="App">
-            <Header />
-            <CardSection />
-        </div>
-    );
+const App: React.FunctionComponent = () => {
+  return (
+    <div className='App'>
+      <Header/>
+      <CardSection/>
+    </div>
+  )
 }
 
-export default App;
+export default App
